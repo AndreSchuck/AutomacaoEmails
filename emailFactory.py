@@ -75,4 +75,3 @@ class Email:
 
     def compose_email_as_string(self) -> str:
         return self.compose_email_as_mimemultipart().as_string()
-#c
