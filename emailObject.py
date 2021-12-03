@@ -6,7 +6,7 @@ from email.utils import COMMASPACE, formatdate
 from email import encoders
 from typing import List, Optional
 
-class Email:
+class EmailObject:
     """Class that represents a basic Email structure, with sender, recivers, subject, message and attachments"""
 
     def __init__(self, sender: str, receivers: List[str], subject: str,
@@ -45,7 +45,6 @@ class Email:
 
     def set_message_body(self):
         """Functions that set email message body"""
-
         self.email.attach(MIMEText(self.message))
         return
 
