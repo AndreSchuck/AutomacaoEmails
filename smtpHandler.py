@@ -1,9 +1,6 @@
 import smtplib
-from email.mime.multipart import MIMEMultipart
 from abc import ABC, abstractmethod
-from emailFactory import Email
-from typing import List
-
+from emailObject import EmailObject
 
 class SMTPServerHandler(ABC):
     """Abstract class that represents an SMTP Server"""
@@ -16,9 +13,9 @@ class SMTPServerHandler(ABC):
         return
 
 class SMTPOutlookHandler(SMTPServerHandler):
-    def __init__(self, username: str, password: str, email: Email):
+    def __init__(self, username: str, password: str, email: EmailObject):
         self.username = username
-        self.password = password
+        self.__password = password
         self.server = 'smtp.office365.com'
         self.port = 587
         self.email = email
@@ -26,7 +23,7 @@ class SMTPOutlookHandler(SMTPServerHandler):
     def __auth__(self):
         smtp = smtplib.SMTP(self.server, self.port)
         smtp.starttls()
-        smtp.login(self.username, self.password)
+        smtp.login(self.username, self.__password)
         return smtp
 
     def send_email(self):
@@ -36,9 +33,9 @@ class SMTPOutlookHandler(SMTPServerHandler):
 
 
 class SMTPGmailHandler(SMTPServerHandler):
-    def __init__(self, username: str, password: str, email: Email):
+    def __init__(self, username: str, password: str, email: EmailObject):
         self.username = username
-        self.password = password
+        self.__password = password
         self.server = 'smtp.gmail.com'
         self.port = 587
         self.email = email
@@ -46,7 +43,7 @@ class SMTPGmailHandler(SMTPServerHandler):
     def __auth__(self):
         smtp = smtplib.SMTP(self.server, self.port)
         smtp.starttls()
-        smtp.login(self.username, self.password)
+        smtp.login(self.username, self.__password)
         return smtp
 
     def send_email(self):
