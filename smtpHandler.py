@@ -5,7 +5,7 @@ from emailObject import EmailObject
 class SMTPServerHandler(ABC):
     """Abstract class that represents an SMTP Server"""
     @abstractmethod
-    def __auth(self):
+    def auth(self):
         """ Abstract private method to deal with authentication of email providers """
         return
 
@@ -36,7 +36,7 @@ class SMTPOutlookHandler(SMTPServerHandler):
         self.port = 587
         self.email = email
 
-    def __auth(self) -> smtplib.SMTP:
+    def auth(self) -> smtplib.SMTP:
         """This private method provides tls connection with Outlook email server"""
         smtp = smtplib.SMTP(self.server, self.port)
         smtp.starttls()
@@ -45,7 +45,7 @@ class SMTPOutlookHandler(SMTPServerHandler):
 
     def send_email(self) -> None:
         """This method sends emails using Outlook email servers"""
-        connection = self.__auth()
+        connection = self.auth()
         connection.sendmail(from_addr=self.email.sender, to_addrs=self.email.receivers, msg=self.email.compose_email_as_string())
         connection.quit()
 
@@ -72,7 +72,7 @@ class SMTPGmailHandler(SMTPServerHandler):
         self.port = 587
         self.email = email
 
-    def __auth(self) -> smtplib.SMTP:
+    def auth(self) -> smtplib.SMTP:
         """This private method provides tls connection with Gmail email server"""
         smtp = smtplib.SMTP(self.server, self.port)
         smtp.starttls()
@@ -81,6 +81,6 @@ class SMTPGmailHandler(SMTPServerHandler):
 
     def send_email(self) -> None:
         """This method sends emails using Gmail email servers"""
-        connection = self.__auth()
+        connection = self.auth()
         connection.sendmail(from_addr=self.email.sender, to_addrs=self.email.receivers, msg=self.email.compose_email_as_string())
         connection.quit()
