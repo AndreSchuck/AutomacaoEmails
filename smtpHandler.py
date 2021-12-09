@@ -1,6 +1,6 @@
 import smtplib
 from abc import ABC, abstractmethod
-from emailObject import EmailObject
+from .emailObject import EmailObject
 
 class SMTPServerHandler(ABC):
     """Abstract class that represents an SMTP Server"""
