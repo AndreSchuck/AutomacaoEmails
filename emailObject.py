@@ -50,7 +50,8 @@ class EmailObject:
 
     def set_message_attachments(self):
         """Functions that set email attachments"""
-
+        if self.attachments_paths_list is None:
+            return
         for file_path in self.attachments_paths_list:
             with open(file_path, 'rb') as binary_pdf:
                 file_name = file_path.name
